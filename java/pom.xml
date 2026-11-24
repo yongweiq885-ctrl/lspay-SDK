@@ -9,6 +9,15 @@
 
     <name>lspay-sdk-java</name>
     <description>立收通 (LSPay) 支付渠道 Java SDK</description>
+    <url>https://github.com/yongweiq885-ctrl/lspay-SDK</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
