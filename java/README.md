@@ -56,6 +56,28 @@ if (resp.isError()) {
 }
 ```
 
+### 2.1 cashier 收银台
+
+`channel_extra.pay_data_type=cashier` 时网关直接返回立收通收银台页面，不返回 JSON，不能用 `LsPayClient.execute` 调用（会直接报错）。服务端只签名，把自动提交的表单作为用户“去支付”请求的响应返回，浏览器加载后立即 POST 到网关并跳转收银台，用户无需再点击。
+
+```java
+import tech.lspay.sdk.core.CashierForm;
+
+UnifiedOrderRequest req = new UnifiedOrderRequest()
+        .setMchOrderNo(orderNo)
+        .setWayCode(WayCodeEnum.ALI_QR)
+        .setAmount(100)
+        .setSubject("会员月卡")
+        .setBody("会员月卡 1 个月")
+        .setChannelExtra("{\"pay_data_type\":\"cashier\"}");
+
+CashierForm form = LsPayClient.buildCashierForm(req, "default"); // 只签名，不发请求
+response.setContentType("text/html;charset=UTF-8");
+response.getWriter().write(form.toHtml());                       // 自带 submit()，直接跳转收银台
+```
+
+前后端分离时，后端返回 `form.getAction()`、`form.getMethod()` 和 `form.getFields()`，前端拿到后立即创建隐藏表单并 `submit()`。支付结果仍以异步通知或订单查询为准。
+
 ## 3. 多商户
 
 ```java

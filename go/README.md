@@ -66,6 +66,31 @@ ChannelExtra: map[string]interface{}{"openid": "o6Bc..."}
 ChannelExtra: `{"openid":"o6Bc..."}`
 ```
 
+## cashier 收银台
+
+`ChannelExtra` 的 `PayDataType` 为 `cashier` 时网关直接返回立收通收银台页面，不返回 JSON，不能用 `client.UnifiedOrder` 调用（会返回校验错误）。服务端只签名，把自动提交的表单作为用户“去支付”请求的响应返回，浏览器加载后立即 POST 到网关并跳转收银台，用户无需再点击。
+
+```go
+func payHandler(w http.ResponseWriter, r *http.Request) {
+    form, err := client.BuildCashierForm(&lspay.UnifiedOrderRequest{
+        MchOrderNo:   orderNo,
+        WayCode:      lspay.WayCodeAliQR,
+        Amount:       100,
+        Subject:      "会员月卡",
+        Body:         "会员月卡 1 个月",
+        ChannelExtra: &lspay.UnifiedOrderChannelExtra{PayDataType: lspay.PayDataTypeCashier},
+    }) // 只签名，不发请求
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+    w.Header().Set("Content-Type", "text/html; charset=utf-8")
+    io.WriteString(w, form.HTML()) // 自带 submit()，直接跳转收银台
+}
+```
+
+前后端分离时，后端返回 `form.Action`、`form.Method` 和 `form.Fields`，前端拿到后立即创建隐藏表单并 `submit()`。支付结果仍以异步通知或 `QueryOrder` 为准。
+
 ## 接口与方法
 
 | 接口 | 方法 | 请求 / 响应 |

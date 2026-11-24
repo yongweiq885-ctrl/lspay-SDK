@@ -62,6 +62,43 @@ const response = await LsPayClient.postRequest({
 
 已注册端点会经 `RequestFactory` 转换并执行同样的参数校验；未知字段作为扩展参数透传，但不能覆盖正式请求字段。
 
+## cashier 收银台
+
+`pay_data_type=cashier` 时网关直接返回立收通收银台页面，不返回 JSON，不能用 `LsPayClient.execute` 调用（会直接报错）。签名必须在服务端完成：服务端只签名，把自动提交的表单作为用户“去支付”请求的响应返回，浏览器加载后立即 POST 到网关并跳转收银台，用户无需再点击。
+
+Node 服务端（以 Express 为例）：
+
+```js
+app.post('/pay', (req, res) => {
+  const request = new UnifiedOrderRequest()
+    .setMchOrderNo(orderNo)
+    .setWayCode(WayCode.ALI_QR)
+    .setAmount(100)
+    .setSubject('会员月卡')
+    .setBody('会员月卡 1 个月')
+    .setChannelExtra({ pay_data_type: 'cashier' });
+  const form = LsPayClient.buildCashierForm(request, 'server'); // 只签名，不发请求
+  res.type('html').send(form.toHtml());                          // 自带 submit()，直接跳转收银台
+});
+```
+
+H5 前后端分离时，服务端接口返回 `{ action, method, fields }`，页面拿到后立即提交：
+
+```js
+const f = document.createElement('form');
+f.method = data.method;
+f.action = data.action;
+Object.entries(data.fields).forEach(([name, value]) => {
+  const input = document.createElement('input');
+  input.type = 'hidden'; input.name = name; input.value = value;
+  f.appendChild(input);
+});
+document.body.appendChild(f);
+f.submit();
+```
+
+小程序里没有 HTML 表单，不能使用 cashier，改用 `pay_url` 等其它 `pay_data_type`。支付结果仍以异步通知或订单查询为准。
+
 ## channel_extra 构造器
 
 统一下单和分账使用 `UnifiedOrderChannelExtra`、`DivisionReceiver`；余额支付使用 `BalancePayChannelExtra`；快捷支付使用 `QuickPayBindChannelExtra`、`QuickPayBindConfirmChannelExtra`、`QuickPayUnbindChannelExtra`；电子账户使用 `ElectronicAccountOpenChannelExtra`、用户/商户信息、结算卡、结算配置和提现配置构造器。

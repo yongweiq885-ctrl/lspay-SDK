@@ -70,6 +70,27 @@ resp = LsPayClient.execute(req)
 print(resp.get_error_info() if resp.is_error() else resp.get_data())
 ```
 
+### 2.1 cashier 收银台
+
+`channel_extra.pay_data_type=cashier` 时网关直接返回立收通收银台页面，不返回 JSON，不能用 `LsPayClient.execute` 调用（会直接报错）。服务端只签名，把自动提交的表单作为用户“去支付”请求的响应返回，浏览器加载后立即 POST 到网关并跳转收银台，用户无需再点击。
+
+```python
+req = UnifiedOrderRequest(
+    mch_order_no=order_no,
+    way_code=WayCode.ALI_QR,
+    amount=100,
+    subject="会员月卡",
+    body="会员月卡 1 个月",
+    channel_extra={"pay_data_type": "cashier"},
+)
+form = LsPayClient.build_cashier_form(req, "default")  # 只签名，不发请求
+
+# Flask / Django 视图里直接返回 HTML，自带 submit()，浏览器直接跳转收银台
+return form.to_html()
+```
+
+前后端分离时，后端返回 `form.action`、`form.method` 和 `form.fields`，前端拿到后立即创建隐藏表单并 `submit()`。支付结果仍以异步通知或订单查询为准。
+
 ## 3. 多商户
 
 ```python

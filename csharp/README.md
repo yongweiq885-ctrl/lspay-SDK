@@ -80,6 +80,27 @@ var refundQuery = await client.PostAsync(new QueryRefundRequest { MchRefundNo = 
 
 同步响应的 `status=200` 仅代表接口受理；支付成功看 `OrderState.Paid`，退款完成看 `RefundState.Succeeded`。同步响应中的 `sign` 仅透传，不验签。
 
+## cashier 收银台
+
+`PayDataType.Cashier` 时网关直接返回立收通收银台页面，不返回 JSON，不能用 `PostAsync` 调用（会抛 `LsPayValidationException`）。服务端只签名，把自动提交的表单作为用户“去支付”请求的响应返回，浏览器加载后立即 POST 到网关并跳转收银台，用户无需再点击。
+
+```csharp
+var form = client.BuildCashierForm(new UnifiedOrderRequest
+{
+    MchOrderNo = orderNo,
+    WayCode = WayCode.ALI_QR,
+    Amount = 100,
+    Subject = "会员月卡",
+    Body = "会员月卡 1 个月",
+    ChannelExtra = new UnifiedOrderChannelExtra().PayData(PayDataType.Cashier)
+}); // 只签名，不发请求
+
+// ASP.NET Core 控制器：自带 submit()，直接跳转收银台
+return Content(form.ToHtml(), "text/html; charset=utf-8");
+```
+
+前后端分离时，后端返回 `form.Action`、`form.Method` 和 `form.Fields`，前端拿到后立即创建隐藏表单并 `submit()`。支付结果仍以异步通知或订单查询为准。
+
 ## 已覆盖接口
 
 - 支付：统一下单、订单查询、申请退款、退款查询
