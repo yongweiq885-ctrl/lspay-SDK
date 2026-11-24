@@ -1,0 +1,25 @@
+{
+  "name": "lspay/lspay-sdk-php",
+  "description": "立收通支付网关 PHP SDK",
+  "type": "library",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.4",
+    "ext-curl": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "LsPaySdk\\": "LsPaySdk/"
+    },
+    "classmap": [
+      "LsPaySdk/exceptions/LsPayException.php"
+    ],
+    "files": [
+      "LsPaySdk/bootstrap.php"
+    ]
+  },
+  "scripts": {
+    "test": "@php tests/run.php"
+  }
+}

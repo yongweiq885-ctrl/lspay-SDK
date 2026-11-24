@@ -1,0 +1,38 @@
+name: PHP SDK
+
+on:
+  push:
+    paths:
+      - "php/**"
+      - ".github/workflows/php.yml"
+  pull_request:
+    paths:
+      - "php/**"
+      - ".github/workflows/php.yml"
+
+jobs:
+  protocol-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.4", "8.2", "8.4"]
+
+    defaults:
+      run:
+        working-directory: php
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, json, mbstring
+          coverage: none
+
+      - run: composer validate --strict --no-check-publish
+      - run: composer install --no-interaction --prefer-dist
+      - name: Verify Composer autoload
+        run: php -r "require 'vendor/autoload.php'; new LsPaySdk\\request\\UnifiedOrderRequest();"
+      - run: composer test

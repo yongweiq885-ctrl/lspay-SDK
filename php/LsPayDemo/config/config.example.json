@@ -1,0 +1,8 @@
+{
+  "mch_no": "YOUR_MERCHANT_NO",
+  "app_id": "YOUR_APP_ID",
+  "md5_key": "YOUR_MD5_KEY",
+  "notify_url": "https://merchant.example.com/lspay/notify",
+  "return_url": "https://merchant.example.com/lspay/return",
+  "debug_panel_allow_live": false
+}

@@ -1,0 +1,13 @@
+{
+  "name": "lspay-sdk-uniapp",
+  "version": "3.0.0",
+  "description": "立收通 (LSPay) 支付渠道 UniApp / JavaScript SDK",
+  "main": "lspay/index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "node test/protocol.test.js",
+    "check": "node test/syntax-check.js",
+    "verify": "npm run check && npm test"
+  },
+  "keywords": ["lspay", "立收通", "uniapp", "payment", "sdk"]
+}

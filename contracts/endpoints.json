@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "endpoints": [
+    {"id": "unified_order", "path": "gateway/unifiedorder", "requestClass": "UnifiedOrderRequest", "responseClass": "UnifiedOrderResponse"},
+    {"id": "query_order", "path": "gateway/query", "requestClass": "QueryOrderRequest", "responseClass": "QueryOrderResponse"},
+    {"id": "refund", "path": "gateway/refund", "requestClass": "RefundRequest", "responseClass": "RefundResponse"},
+    {"id": "query_refund", "path": "gateway/refund/query", "requestClass": "QueryRefundRequest", "responseClass": "QueryRefundResponse"},
+    {"id": "delay_trans_confirm", "path": "gateway/delaytrans/confirm", "requestClass": "DelayTransConfirmRequest", "responseClass": "DelayTransConfirmResponse"},
+    {"id": "delay_trans_confirm_refund", "path": "gateway/delaytrans/confirmrefund", "requestClass": "DelayTransConfirmRefundRequest", "responseClass": "DelayTransConfirmRefundResponse"},
+    {"id": "delay_trans_unconfirm_query", "path": "gateway/delaytrans/unconfirm/query", "requestClass": "DelayTransUnconfirmQueryRequest", "responseClass": "DelayTransUnconfirmQueryResponse"},
+    {"id": "delay_trans_create_task", "path": "gateway/delaytrans/createtask", "requestClass": "DelayTransCreateTaskRequest", "responseClass": "DelayTransCreateTaskResponse"},
+    {"id": "quick_pay_bind_apply", "path": "gateway/quickpay/buckleapply", "requestClass": "QuickPayBindApplyRequest", "responseClass": "QuickPayBindApplyResponse"},
+    {"id": "quick_pay_bind_confirm", "path": "gateway/quickpay/buckleconfirm", "requestClass": "QuickPayBindConfirmRequest", "responseClass": "QuickPayBindConfirmResponse"},
+    {"id": "quick_pay_confirm", "path": "gateway/quickpay/payconfirm", "requestClass": "QuickPayConfirmRequest", "responseClass": "QuickPayConfirmResponse"},
+    {"id": "quick_pay_unbind", "path": "gateway/quickpay/payunbind", "requestClass": "QuickPayUnbindRequest", "responseClass": "QuickPayUnbindResponse"},
+    {"id": "quick_pay_sms_check", "path": "gateway/quickpay/smscheck", "requestClass": "QuickPaySmsCheckRequest", "responseClass": "QuickPaySmsCheckResponse"},
+    {"id": "electronic_account_user_open", "path": "gateway/user/personapply", "requestClass": "ElectronicAccountUserOpenRequest", "responseClass": "ElectronicAccountUserOpenResponse"},
+    {"id": "electronic_account_business_open", "path": "gateway/user/personconfirm", "requestClass": "ElectronicAccountBusinessOpenRequest", "responseClass": "ElectronicAccountBusinessOpenResponse"},
+    {"id": "electronic_account_business_change", "path": "gateway/user/personmodify", "requestClass": "ElectronicAccountBusinessChangeRequest", "responseClass": "ElectronicAccountBusinessChangeResponse"},
+    {"id": "electronic_account_user_query", "path": "gateway/user/query", "requestClass": "ElectronicAccountUserQueryRequest", "responseClass": "ElectronicAccountUserQueryResponse"},
+    {"id": "electronic_account_settlement_query", "path": "gateway/user/settlement/query", "requestClass": "ElectronicAccountSettlementQueryRequest", "responseClass": "ElectronicAccountSettlementQueryResponse"},
+    {"id": "electronic_account_balance_withdraw", "path": "gateway/user/balance/withdraw", "requestClass": "ElectronicAccountBalanceWithdrawRequest", "responseClass": "ElectronicAccountBalanceWithdrawResponse"},
+    {"id": "electronic_account_single_withdraw_query", "path": "gateway/user/balance/withdraw/single/query", "requestClass": "ElectronicAccountSingleWithdrawQueryRequest", "responseClass": "ElectronicAccountSingleWithdrawQueryResponse"},
+    {"id": "electronic_account_batch_withdraw_query", "path": "gateway/user/balance/withdraw/query", "requestClass": "ElectronicAccountBatchWithdrawQueryRequest", "responseClass": "ElectronicAccountBatchWithdrawQueryResponse"},
+    {"id": "balance_query", "path": "gateway/user/balance/query", "requestClass": "BalanceQueryRequest", "responseClass": "BalanceQueryResponse"}
+  ],
+  "sharedEndpointCapabilities": {
+    "gateway/unifiedorder": [
+      "unified_order",
+      "quick_pay_apply",
+      "balance_pay"
+    ]
+  },
+  "additionalRequests": [
+    {"id": "quick_pay_apply", "requestClass": "QuickPayApplyRequest", "responseClass": "QuickPayApplyResponse"},
+    {"id": "balance_pay", "requestClass": "BalancePayRequest", "responseClass": "BalancePayResponse"}
+  ],
+  "notifications": [
+    {"id": "payment", "class": "PaymentNotify"},
+    {"id": "refund", "class": "RefundNotify"},
+    {"id": "delay_trans_transfer", "class": "DelayTransTransferNotify"}
+  ]
+}

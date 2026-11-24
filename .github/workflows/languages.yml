@@ -1,0 +1,106 @@
+name: Java Python CSharp UniApp Go SDKs
+
+on:
+  push:
+    paths:
+      - "java/**"
+      - "python/**"
+      - "csharp/**"
+      - "uniapp/**"
+      - "go/**"
+      - "contracts/**"
+      - "_verify/verify_language_coverage.py"
+      - "_verify/fixtures/**"
+      - ".github/workflows/languages.yml"
+  pull_request:
+    paths:
+      - "java/**"
+      - "python/**"
+      - "csharp/**"
+      - "uniapp/**"
+      - "go/**"
+      - "contracts/**"
+      - "_verify/verify_language_coverage.py"
+      - "_verify/fixtures/**"
+      - ".github/workflows/languages.yml"
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python _verify/verify_language_coverage.py
+
+  java:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: java
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "8"
+          cache: maven
+      - run: mvn --batch-mode verify
+
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: python/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - run: python -m compileall -q lspay examples
+      - run: python -m unittest discover -s tests -v
+
+  csharp:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: csharp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - run: dotnet run --project tests/LsPaySdk.Tests/LsPaySdk.Tests.csproj --configuration Release
+
+  uniapp:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: uniapp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm run verify
+
+  go:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    strategy:
+      matrix:
+        go-version: ["1.18", "1.22"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+      - run: test -z "$(gofmt -l .)"
+      - run: go vet ./...
+      - run: go test ./...

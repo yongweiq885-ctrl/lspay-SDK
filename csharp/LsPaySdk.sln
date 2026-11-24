@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6E31E10F-0708-44DA-9CB1-445ED9CF7A40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LsPaySdk", "src\LsPaySdk\LsPaySdk.csproj", "{2A81EB5F-F809-41DD-9BF5-726D559C1890}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{699E52F5-8DC6-4EA7-AB46-AB353DBDB0F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LsPaySdk.Tests", "tests\LsPaySdk.Tests\LsPaySdk.Tests.csproj", "{6624366C-F298-4CB1-A381-C7103E63C3EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{7CC3F84B-AD56-49B3-B07F-837C517CD753}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LsPaySdk.Demo", "demo\LsPaySdk.Demo\LsPaySdk.Demo.csproj", "{BC19F3A7-3949-4446-8F3C-7BBDB0B7E252}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A81EB5F-F809-41DD-9BF5-726D559C1890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A81EB5F-F809-41DD-9BF5-726D559C1890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A81EB5F-F809-41DD-9BF5-726D559C1890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A81EB5F-F809-41DD-9BF5-726D559C1890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6624366C-F298-4CB1-A381-C7103E63C3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6624366C-F298-4CB1-A381-C7103E63C3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6624366C-F298-4CB1-A381-C7103E63C3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6624366C-F298-4CB1-A381-C7103E63C3EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC19F3A7-3949-4446-8F3C-7BBDB0B7E252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC19F3A7-3949-4446-8F3C-7BBDB0B7E252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC19F3A7-3949-4446-8F3C-7BBDB0B7E252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC19F3A7-3949-4446-8F3C-7BBDB0B7E252}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2A81EB5F-F809-41DD-9BF5-726D559C1890} = {6E31E10F-0708-44DA-9CB1-445ED9CF7A40}
+		{6624366C-F298-4CB1-A381-C7103E63C3EF} = {699E52F5-8DC6-4EA7-AB46-AB353DBDB0F8}
+		{BC19F3A7-3949-4446-8F3C-7BBDB0B7E252} = {7CC3F84B-AD56-49B3-B07F-837C517CD753}
+	EndGlobalSection
+EndGlobal

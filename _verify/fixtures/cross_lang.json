@@ -1,0 +1,48 @@
+{
+  "secret": "JT2025_DEMO_SECRET_KEY",
+  "tests": [
+    {
+      "name": "minimal",
+      "data": { "a": "1", "b": "2" },
+      "expect_sign": "CD9D772610FCC1396431811A0189F50E"
+    },
+    {
+      "name": "with_empty_and_null",
+      "data": {
+        "a": "1",
+        "b": "",
+        "c": "2",
+        "d": null,
+        "e": "3",
+        "sign": "WILL_BE_IGNORED"
+      },
+      "expect_sign": "6E864E0A8CEB3D618BBD9FAE88A049E1"
+    },
+    {
+      "name": "unified_order_full",
+      "data": {
+        "mch_no":        "839305812000286",
+        "app_id":        "A0001",
+        "way_code":      "WX_PUB",
+        "amount":        "100",
+        "currency":      "cny",
+        "subject":       "测试商品",
+        "body":          "支付测试",
+        "notify_url":    "https://www.lspay.tech/lspay/notify",
+        "return_url":    "https://www.lspay.tech/success",
+        "channel_extra": "{\"pay_data_type\": \"code_img_url\"}",
+        "req_time":      "1779958002449",
+        "version":       "1.0",
+        "sign_type":     "MD5",
+        "mch_order_no":  "0019770760423138"
+      },
+      "expect_sign": "E728465DB08DF8D8672D8C39FE2FC294"
+    }
+  ],
+  "endpoints": [
+    { "code": "gateway/unifiedorder", "full": "https://api.lspay.tech/gateway/unifiedorder" },
+    { "code": "gateway/query",        "full": "https://api.lspay.tech/gateway/query" },
+    { "code": "gateway/refund",       "full": "https://api.lspay.tech/gateway/refund" },
+    { "code": "gateway/refund/query", "full": "https://api.lspay.tech/gateway/refund/query" }
+  ]
+}
