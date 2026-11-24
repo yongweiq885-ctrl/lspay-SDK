@@ -93,7 +93,7 @@ lspay-sdk/
 
 `md5_key` 只用于签名，不放进请求体。业务方只传业务字段，公共字段和 `sign` 由 SDK 注入。
 
-`channel_extra.pay_data_type=cashier` 时网关直接返回立收通收银台页面，不返回 JSON，不能在服务端调用统一下单接口。服务端只生成签名表单，交给用户浏览器 POST 到网关；用普通接口调用发 cashier 会直接报错。
+`channel_extra.pay_data_type=cashier` 时网关直接返回立收通收银台页面，不返回 JSON，不能在服务端调用统一下单接口。服务端只签名，把自动提交的表单作为“去支付”请求的响应返回，浏览器加载后立即 POST 到网关并跳转收银台，用户无需再点击；用普通接口调用发 cashier 会直接报错。
 
 | 语言 | 生成表单 | 输出自动提交的 HTML |
 |------|----------|--------------------|
@@ -104,7 +104,7 @@ lspay-sdk/
 | Go | `client.BuildCashierForm(req)` | `form.HTML()` |
 | UniApp / Node.js | `LsPayClient.buildCashierForm(req)` | `form.toHtml()` |
 
-生成的表单包含 `action`（统一下单地址）、`method`（`POST`）和已签名的全部字段。PHP 示例见 `php/LsPayDemo/v1/payment/create/CashierFormDemo.php`。
+生成的表单包含 `action`（统一下单地址）、`method`（`POST`）和已签名的全部字段；输出的 HTML 自带 `submit()` 脚本。前后端分离时，前端拿到字段后立即创建隐藏表单并 `submit()`。调试面板里需要再点一次“提交跳转收银台”，只是为了防止调试误下单。PHP 示例见 `php/LsPayDemo/v1/payment/create/CashierFormDemo.php`。
 
 ### 3.2 下单时分账
 

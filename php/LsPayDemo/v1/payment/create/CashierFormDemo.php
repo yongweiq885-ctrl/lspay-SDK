@@ -4,9 +4,9 @@
  *
  * channel_extra.pay_data_type: cashier
  * 网关直接返回收银台页面，不返回 JSON。服务端只负责生成签名表单，
- * 由用户浏览器 POST 到网关；不要用 postRequest() 调用。
+ * 不要用 postRequest() 调用。输出的表单会自动提交，浏览器直接跳转收银台。
  *
- * 用浏览器访问本文件即可跳转到收银台。
+ * 用浏览器访问本文件即可直接跳转到收银台，接入时把它放在商户“去支付”的处理逻辑里。
  */
 namespace LsPayDemo;
 

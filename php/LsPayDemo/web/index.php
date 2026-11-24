@@ -2128,7 +2128,7 @@ function renderResult(data) {
     if (data.cashier_form) {
         html += '<div class="result-block">';
         html += '  <div class="lab">收银台表单</div>';
-        html += '  <div class="form-notice" style="margin-bottom:8px;">pay_data_type=cashier 需用form表单提交,上方窗的签名参数表单 POST 到网关，网关直接返回收银台页面，服务端不会收到 JSON 响应。'
+        html += '  <div class="form-notice" style="margin-bottom:8px;">pay_data_type=cashier 需用 form 表单把上方签名参数 POST 到网关，网关直接返回收银台页面，不返回 JSON。商户正式接入时输出自动提交的表单，浏览器直接跳转收银台，无需用户再点击；面板多这一步只为防止调试误下单。'
             + (data.dry_run ? '当前是干跑模式，不会提交。' : '点击下方按钮会在新标签页打开收银台，并真实创建订单。') + '</div>';
         html += '  <button type="button" class="btn btn-primary" id="btnCashierSubmit"' + (data.dry_run ? ' disabled' : '') + '>'
             + (data.dry_run ? '干跑模式不提交' : '提交跳转收银台') + '</button>';
