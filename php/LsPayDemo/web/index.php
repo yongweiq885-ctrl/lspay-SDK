@@ -973,6 +973,8 @@ $gateway_base = PROD_MODE ? LsPay::BASE_API_URL_PROD : LsPay::BASE_API_URL_TEST;
 <head>
 <meta charset="utf-8">
 <title>立收通 SDK Web 调试面板</title>
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="shortcut icon" href="favicon.ico">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 * { box-sizing: border-box; }
