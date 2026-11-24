@@ -701,4 +701,4 @@ node   _verify/cross_lang_js.mjs
 
 ## 10. License
 
-[MIT](LICENSE) © LSPay（立收通）
+[MIT](LICENSE) © 立收通
